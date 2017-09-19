@@ -19,4 +19,4 @@ Change directory to project's folder ecommerce-sample
 Run command "./vendor/bin/phpcs models/"  
 It should display no errors, showing that the code conforms to PSR-1 and PSR-2  
 
-The "coverage" folder already include my coverage results
+###### The "coverage" folder already includes my coverage results
