@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * PHP Version 7.0.22
+ *
+ * @category Demo
+ * @package  Tests
+ * @author   Dang Nguyen <ndhdang@gmail.com>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     http://link.com
+ * @since    1.0.0
+ */
+
 require_once './models/Product.php';
 require_once './models/User.php';
 require_once './models/ShoppingCart.php';
@@ -9,32 +20,52 @@ use SampleEcommerce\Model\Product;
 use SampleEcommerce\Model\ShoppingCart;
 use SampleEcommerce\Model\User;
 
-class ecommerceTest extends TestCase
+/**
+ * EcommerceTest class
+ *
+ * @category Demo
+ * @package  Tests
+ * @author   Dang Nguyen <ndhdang@gmail.com>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     http://link.com
+ * @since    1.0.0
+ */
+class EcommerceTest extends TestCase
 {
+    /**
+     * Add 2 "Apple" products with 4.95 each and 1 "Orange" product with 3.99, 
+     * then calculate total price
+     *
+     * @return void
+     */
     public function testAddProductAndCalculatePrice()
     {
-        $user   = new User('John Doe', 'john.doe@example.com');
+        $user   = new User('John', 'john@mail.com');
         $apple  = new Product('Apple', 4.95);
-        $apple2 = new Product('Apple 2', 4.95);
         $orange = new Product('Orange', 3.99);
 
-        $user->addProduct($apple);
-        $user->addProduct($apple2);
-        $user->addProduct($orange);
-        $this->assertEquals(13.89, $user->shoppingCart->calculatePrice());
+        $user->addProduct($apple, 2);
+        $user->addProduct($orange, 1);
+
+        $price = $user->shoppingCart->calculatePrice();
+        $this->assertEquals(13.89, $price);
     }
 
+    /**
+     * Add 3 "Apple" products with 4.95 each, remove 1 "Apple"
+     * then calculate total price
+     *
+     * @return void
+     */
     public function testAddRemoveProductAndCalculatePrice()
     {
-        $user   = new User('John Doe', 'john.doe@example.com');
-        $apple  = new Product('Apple', 4.95);
-        $apple2 = new Product('Apple 2', 4.95);
-        $apple3 = new Product('Apple 3', 4.95);
+        $user  = new User('John', 'john@mail.com');
+        $apple = new Product('Apple', 4.95);
 
-        $user->addProduct($apple);
-        $user->addProduct($apple2);
-        $user->addProduct($apple3);
-        $user->removeProduct($apple2);
-        $this->assertEquals(9.9, $user->shoppingCart->calculatePrice());
+        $user->addProduct($apple, 3);
+        $user->removeProduct($apple, 1);
+
+        $price = $user->shoppingCart->calculatePrice();
+        $this->assertEquals(9.9, $price);
     }
 }
